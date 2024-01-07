@@ -119,6 +119,7 @@ public class UserService {
         userToUpdate.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         userToUpdate.setRole(updatedUser.getRole());
         userToUpdate.setEmail(updatedUser.getEmail());
+        System.out.println("userToUpdate: " + userToUpdate);
         userRepository.save(userToUpdate);
     }
 
