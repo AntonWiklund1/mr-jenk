@@ -3,9 +3,7 @@ package com.gritlabstudent.user.ms.exceptions;
 import java.io.Serial;
 
 public class UserCollectionException extends Exception {
-    /**
-     *
-     */
+
     @Serial
     private static final long serialVersionUID = 1L;
 

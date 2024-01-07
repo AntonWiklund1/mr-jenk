@@ -4,14 +4,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gritlabstudent.user.ms.exceptions.UserCollectionException;
 import com.gritlabstudent.user.ms.models.User;
 import com.gritlabstudent.user.ms.models.UserDTO;
+import com.gritlabstudent.user.ms.services.JWTService;
 import com.gritlabstudent.user.ms.services.KafkaService;
 import com.gritlabstudent.user.ms.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import org.springframework.security.core.Authentication;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
@@ -30,6 +35,9 @@ public class UserController {
 
     @Autowired
     private KafkaService KafkaService;
+
+    @Autowired
+    private JWTService jwtService;
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_SELLER')")
@@ -86,17 +94,30 @@ public class UserController {
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_SELLER') or hasRole('ROLE_CLIENT')")
     public ResponseEntity<?> updateUserById(@PathVariable("id") String id, @RequestBody User user) {
+        // give me the username of the user that is logged in
+        // Retrieve the Authentication object
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Extract the JWT token from the Authentication details (assuming it's stored
+        // there)
+        String jwtToken = ((UserDetails) authentication.getPrincipal()).getUsername();
+
+        // Use JWTService to extract the username
+        String loggedInUserName = jwtService.extractUsername(jwtToken);
+
+        // Get userid from username
+        String loggedInUserId = userService.getUserIdByUsername(loggedInUserName);
+
         System.out.println("1here!!!");
         if (user.getRole().equals("ROLE_CLIENT")) {
             System.out.println("2here!!!");
-            String userId = user.getId();
-            if (!userId.equals(id)) {
+            if (!loggedInUserId.equals(id)) {
                 System.out.println("3here!!!");
                 return new ResponseEntity<>("You can only update your own profile", HttpStatus.UNAUTHORIZED);
             }
         }
         try {
-            
+
             userService.updateUser(id, user);
             return new ResponseEntity<>("Update User with id " + id, HttpStatus.OK);
         } catch (ConstraintViolationException e) {

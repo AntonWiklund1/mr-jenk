@@ -63,6 +63,11 @@ public class UserService {
         return optionalUser.map(this::convertToUserDTO).orElse(null);
     }
 
+    public String getUserIdByUsername(String username) {
+        Optional<User> userOptional = userRepository.findByName(username);
+        return userOptional.get().getId();
+    }
+
     // Get all user emails in a list
     public List<String> getAllUserEmails() {
         return userRepository.findAll().stream()
