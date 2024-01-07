@@ -48,7 +48,7 @@ export class UserService {
     return this.http.delete(`${this.apiGetUserUrl}/${id}`, { headers: headers, responseType: 'text'  });
   }
   //update user
-  updateProfile(id:string, newUser: any, token: string)  {
+  updateProfile(id: string, newUser: any, token: string)  {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
