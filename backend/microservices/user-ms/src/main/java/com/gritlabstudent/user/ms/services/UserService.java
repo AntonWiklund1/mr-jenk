@@ -114,11 +114,12 @@ public class UserService {
         if (userNameOptional.isPresent() && !userNameOptional.get().getId().equals(id)) {
             throw new UserCollectionException(UserCollectionException.UserNameAlreadyExistException());
         }
-        updatedUser.setName(updatedUser.getName());
-        updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-        updatedUser.setRole(updatedUser.getRole());
-        updatedUser.setEmail(updatedUser.getEmail());
-        userRepository.save(updatedUser);
+        User userToUpdate = userOptional.get();
+        userToUpdate.setName(updatedUser.getName());
+        userToUpdate.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        userToUpdate.setRole(updatedUser.getRole());
+        userToUpdate.setEmail(updatedUser.getEmail());
+        userRepository.save(userToUpdate);
     }
 
     // Delete User
