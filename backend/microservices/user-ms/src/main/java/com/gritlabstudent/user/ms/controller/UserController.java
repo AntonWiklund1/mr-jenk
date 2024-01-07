@@ -100,10 +100,7 @@ public class UserController {
 
         // Extract the JWT token from the Authentication details (assuming it's stored
         // there)
-        String jwtToken = ((UserDetails) authentication.getPrincipal()).getUsername();
-
-        // Use JWTService to extract the username
-        String loggedInUserName = jwtService.extractUsername(jwtToken);
+        String loggedInUserName = ((UserDetails) authentication.getPrincipal()).getUsername();
 
         // Get userid from username
         String loggedInUserId = userService.getUserIdByUsername(loggedInUserName);
@@ -117,7 +114,6 @@ public class UserController {
             }
         }
         try {
-
             userService.updateUser(id, user);
             return new ResponseEntity<>("Update User with id " + id, HttpStatus.OK);
         } catch (ConstraintViolationException e) {

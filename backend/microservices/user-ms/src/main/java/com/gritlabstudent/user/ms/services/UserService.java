@@ -99,7 +99,7 @@ public class UserService {
     }
 
     // Update User
-    public User updateUser(String id, User updatedUser)
+    public void updateUser(String id, User updatedUser)
             throws ConstraintViolationException, UserCollectionException, NoSuchAlgorithmException {
         ValidateUser.validateUser(updatedUser);
         Optional<User> userOptional = userRepository.findById(id);
@@ -118,9 +118,7 @@ public class UserService {
         updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         updatedUser.setRole(updatedUser.getRole());
         updatedUser.setEmail(updatedUser.getEmail());
-
-        return userRepository.save(updatedUser);
-
+        userRepository.save(updatedUser);
     }
 
     // Delete User
