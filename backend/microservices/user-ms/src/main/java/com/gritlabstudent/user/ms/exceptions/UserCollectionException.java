@@ -21,6 +21,14 @@ public class UserCollectionException extends Exception {
         return "User already exist!";
     }
 
+    public static String EmailAlreadyExistException() {
+        return "Email already exist!";
+    }
+
+    public static String UserNameAlreadyExistException() {
+        return "User name already exist!";
+    }
+
     public static String NullException() {
         return " cannot be empty!";
     }

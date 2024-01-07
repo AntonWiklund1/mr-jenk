@@ -70,6 +70,29 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    // Get all user names in a list
+    public List<String> getAllUserNames() {
+        return userRepository.findAll().stream()
+                .map(User::getName)
+                .collect(Collectors.toList());
+    }
+
+    // Get all other user names in a list
+    public List<String> getAllOtherUserNames(String userId) {
+        return userRepository.findAll().stream()
+                .filter(user -> !user.getId().equals(userId))
+                .map(User::getName)
+                .collect(Collectors.toList());
+    }
+
+    // Get all other user emails in a list
+    public List<String> getAllOtherUserEmails(String userId) {
+        return userRepository.findAll().stream()
+                .filter(user -> !user.getId().equals(userId))
+                .map(User::getEmail)
+                .collect(Collectors.toList());
+    }
+
     // Update User
     public User updateUser(String id, User updatedUser)
             throws ConstraintViolationException, UserCollectionException, NoSuchAlgorithmException {
@@ -78,7 +101,14 @@ public class UserService {
         if (userOptional.isEmpty()) {
             throw new UserCollectionException(UserCollectionException.NotFoundException(id));
         }
-        updatedUser.setId(id);
+        Optional<User> userEmailOptional = userRepository.findByEmail(updatedUser.getEmail());
+        if (userEmailOptional.isPresent() && !userEmailOptional.get().getId().equals(id)) {
+            throw new UserCollectionException(UserCollectionException.EmailAlreadyExistException());
+        }
+        Optional<User> userNameOptional = userRepository.findByName(updatedUser.getName());
+        if (userNameOptional.isPresent() && !userNameOptional.get().getId().equals(id)) {
+            throw new UserCollectionException(UserCollectionException.UserNameAlreadyExistException());
+        }
         updatedUser.setName(updatedUser.getName());
         updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         updatedUser.setRole(updatedUser.getRole());
