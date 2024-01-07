@@ -86,13 +86,17 @@ public class UserController {
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_SELLER') or hasRole('ROLE_CLIENT')")
     public ResponseEntity<?> updateUserById(@PathVariable("id") String id, @RequestBody User user) {
+        System.out.println("1here!!!");
         if (user.getRole().equals("ROLE_CLIENT")) {
+            System.out.println("2here!!!");
             String userId = user.getId();
             if (!userId.equals(id)) {
+                System.out.println("3here!!!");
                 return new ResponseEntity<>("You can only update your own profile", HttpStatus.UNAUTHORIZED);
             }
         }
         try {
+            
             userService.updateUser(id, user);
             return new ResponseEntity<>("Update User with id " + id, HttpStatus.OK);
         } catch (ConstraintViolationException e) {

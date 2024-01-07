@@ -26,11 +26,12 @@ Welcome to our e-commerce platform, an end-to-end solution built with Spring Boo
 
    ```shell
    https://01.gritlab.ax/git/AntonW/buy-01.git
-   ```
+   ``` 
 
-2. Navigate to the backend
+2. Create certificates and navigate to the backend
 
    ```shell
+   bash create.sh
    cd /backend
    ```
 
