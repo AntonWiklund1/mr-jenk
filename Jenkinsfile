@@ -1,45 +1,32 @@
 pipeline {
     agent any
 
-    environment {
-        // Define environment variables if needed, for example:
-        DOCKER_COMPOSE_CMD = "docker-compose -d"
-    }
-
     stages {
         stage('Build Docker Images') {
             steps {
                 script {
-                    // Correct the path to the docker-compose.yml file
+                    // Use the correct path relative to the Jenkins workspace
                     sh 'docker-compose -f backend/docker-compose.yml build'
                 }
             }
-
         }
-        stage('Start Docker Containers') {
+        stage('start docker-compose') {
             steps {
-                // Navigate to the directory containing your docker-compose file
-                dir('backend') {
-                    // Start the containers
-                    sh "docker-compose -f backend/docker-compose.yml up -d"
+                script {
+                    // Use the correct path relative to the Jenkins workspace
+                    sh 'docker-compose -f backend/docker-compose.yml up -d'
                 }
             }
         }
-        stage('Test Application') {
+        stage('Run Tests') {
             steps {
-                // Define your test steps here
-                echo 'Run tests...'
-                // For example, if you have a script to test your application:
-                // sh './run-tests.sh'
+                script {
+                    // Use the correct path relative to the Jenkins workspace
+                    sh "echo 'Running tests...'"
+                }
             }
         }
+        // Other stages...
     }
-    post {
-        always {
-            // Take down the Docker environment after the tests are done
-            dir('backend') {
-                sh "${env.DOCKER_COMPOSE_CMD} down"
-            }
-        }
-    }
+    // Post actions...
 }
