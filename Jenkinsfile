@@ -9,19 +9,19 @@ pipeline {
     stages {
         stage('Build Docker Images') {
             steps {
-                // Navigate to the directory containing your docker-compose file
-                dir('backend') {
-                    // Run docker-compose to build the images
-                    sh "${env.DOCKER_COMPOSE_CMD} build"
+                script {
+                    // Correct the path to the docker-compose.yml file
+                    sh 'docker-compose -f backend/docker-compose.yml build'
                 }
             }
+
         }
         stage('Start Docker Containers') {
             steps {
                 // Navigate to the directory containing your docker-compose file
                 dir('backend') {
                     // Start the containers
-                    sh "${env.DOCKER_COMPOSE_CMD} up -d"
+                    sh "docker-compose -f backend/docker-compose.yml up -d"
                 }
             }
         }
