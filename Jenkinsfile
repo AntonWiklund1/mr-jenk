@@ -23,15 +23,6 @@ pipeline {
                 }
             }
         }
-        stage('Run Tests') {
-            steps {
-                script {
-                    // Use the correct path relative to the Jenkins workspace
-                    sh "echo 'Running tests...'"
-                }
-            }
-        }
-
     }
     // Post actions
     post {
