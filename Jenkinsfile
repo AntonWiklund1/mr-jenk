@@ -24,15 +24,5 @@ pipeline {
             }
         }
     }
-    // Post actions
-    post {
-        always {
-            script {
-                // Use the correct path relative to the Jenkins workspace
-                sh 'docker-compose -f backend/docker-compose.yml down'
-            }
-        }
-    }
-
 }
 
