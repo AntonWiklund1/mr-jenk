@@ -2,6 +2,11 @@ pipeline {
     agent any
 
     stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs() // This will clean the Jenkins workspace
+            }
+        }   
         stage('Build Docker Images') {
             steps {
                 script {
@@ -26,7 +31,17 @@ pipeline {
                 }
             }
         }
-        // Other stages...
+
     }
-    // Post actions...
+    // Post actions
+    post {
+        always {
+            script {
+                // Use the correct path relative to the Jenkins workspace
+                sh 'docker-compose -f backend/docker-compose.yml down'
+            }
+        }
+    }
+
 }
+
