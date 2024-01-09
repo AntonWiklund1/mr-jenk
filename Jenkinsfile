@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Use the correct path relative to the Jenkins workspace
-                    sh 'docker-compose -f backend/docker-compose.yml build'
+                    sh 'docker-compose -f docker-compose.yml build'
                 }
             }
         }
@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     // Use the correct path relative to the Jenkins workspace
-                    sh 'docker-compose -f backend/docker-compose.yml up -d'
+                    sh 'docker-compose -f docker-compose.yml up -d'
                 }
             }
         }
