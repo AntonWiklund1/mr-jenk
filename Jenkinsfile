@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Define environment variables if needed, for example:
-        DOCKER_COMPOSE_CMD = "docker-compose -f backend/docker-compose.yml"
+        DOCKER_COMPOSE_CMD = "docker-compose -f docker-compose.yml"
     }
 
     stages {
