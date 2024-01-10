@@ -2,14 +2,21 @@ FROM jenkins/jenkins:lts-jdk11
 
 USER root
 
-# Install Git, Docker CLI, and Docker Compose
+# Install dependencies and tools
 RUN apt-get update && \
-    apt-get install -y git && \
-    curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh && \
-    curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-aarch64" -o /usr/local/bin/docker-compose && \
-    chmod +x /usr/local/bin/docker-compose && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y git libnss3-tools && \
+    curl -L "https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64" -o /usr/local/bin/mkcert && \
+    chmod +x /usr/local/bin/mkcert && \
+    mkcert -install
+
+# Install Docker CLI and Docker Compose (if needed)
+RUN curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh && \
+    curl -L "https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-$(uname -m)" -o /usr/local/bin/docker-compose && \
+    chmod +x /usr/local/bin/docker-compose
+
+# Clean up
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /get-docker.sh
 
 # Drop back to the regular jenkins user
 USER jenkins
