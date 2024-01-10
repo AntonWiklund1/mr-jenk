@@ -13,18 +13,24 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Docker Compose') {
+        stage('Generate Certificates') {
             steps {
-                dir('backend') {
-                    script {
-                        // Run Docker Compose up
-                        sh 'docker-compose up -d'
-
-                    // Your additional commands here
-                    }
-                }
+                    // Assuming you have a script to generate certificates
+                sh './create.sh'
             }
         }
+        // stage('Docker Compose') {
+        //     steps {
+        //         dir('backend') {
+        //             script {
+        //                 // Run Docker Compose up
+        //                 sh 'docker-compose up -d'
+
+        //             // Your additional commands here
+        //             }
+        //         }
+        //     }
+        // }
     }
     post {
         // Define actions to take after the entire pipeline runs.
@@ -34,12 +40,11 @@ pipeline {
         failure {
             echo 'Build failed!'
         }
-        always {
-            // Clean up the workspace to free space.
-            dir('backend') {
-                sh 'docker-compose down'
-            }
-            
-        }
+        // always {
+        //     // Clean up the workspace to free space.
+        //     dir('backend') {
+        //         sh 'docker-compose down'
+        //     }
+        // }
     }
 }
