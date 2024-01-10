@@ -9,15 +9,13 @@ pipeline {
                 sh 'git status' // Show the status of the Git repository
             }
         }
-        stage('Clean Workspace') {
-            steps {
-                cleanWs() // This will clean the Jenkins workspace
-            }
-        }
+        // Only use cleanWs() here if you want to clear out old workspace data
+        // before checking out new code. If used after 'Checkout SCM', it will
+        // delete the freshly checked-out code.
         stage('Build Docker Images') {
             steps {
                 script {
-                    // Use the correct path relative to the Jenkins workspace
+                    // Builds Docker images using docker-compose
                     sh 'docker-compose -f backend/docker-compose.yml build'
                 }
             }
@@ -25,11 +23,17 @@ pipeline {
         stage('Start Docker Compose') {
             steps {
                 script {
-                    // Use the correct path relative to the Jenkins workspace
+                    // Starts Docker containers in the background
                     sh 'docker-compose -f backend/docker-compose.yml up -d'
                 }
             }
         }
-    // You can add more stages for testing or deployment here
+        // Other stages such as 'Test', 'Deploy', etc. can be added here.
+    }
+    post {
+        always {
+            // Clean up the workspace after the pipeline runs, if desired.
+            cleanWs()
+        }
     }
 }
