@@ -13,7 +13,18 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Docker Compose') {
+            steps {
+                dir('backend') {
+                    script {
+                        // Run Docker Compose up
+                        sh 'docker-compose up -d'
 
+                    // Your additional commands here
+                    }
+                }
+            }
+        }
     }
     post {
         // Define actions to take after the entire pipeline runs.
@@ -25,8 +36,10 @@ pipeline {
         }
         always {
             // Clean up the workspace to free space.
-            deleteDir()
+            dir('backend') {
+                sh 'docker-compose down'
+            }
+            
         }
     }
-
 }
