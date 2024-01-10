@@ -2,6 +2,11 @@ pipeline {
     agent any
 
     stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Clean Workspace') {
             steps {
                 cleanWs() // This will clean the Jenkins workspace
@@ -15,7 +20,7 @@ pipeline {
                 }
             }
         }
-        stage('start docker-compose') {
+        stage('Start Docker Compose') {
             steps {
                 script {
                     // Use the correct path relative to the Jenkins workspace
@@ -23,6 +28,6 @@ pipeline {
                 }
             }
         }
+        // You can add more stages for testing or deployment here
     }
 }
-
