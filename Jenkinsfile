@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('hello world') {
+        stage('Hello World') {
             steps {
-                echo 'hello world'
+                echo 'Hello World'
             }
         }
         stage('Checkout') {
@@ -24,15 +24,24 @@ pipeline {
                     script {
                         // Run Docker Compose up
                         sh 'docker-compose up -d'
-
-                    // Your additional commands here
+                        // Wait for services to be up
+                        sh 'sleep 30'
                     }
                 }
             }
         }
+        // stage('Test') {
+        //     steps {
+        //         dir('backend') {
+        //             script {
+        //                 // Your test commands here
+        //                 sh './run-tests.sh'
+        //             }
+        //         }
+        //     }
+        // }
     }
     post {
-        // Define actions to take after the entire pipeline runs.
         success {
             echo 'Build succeeded!'
         }
