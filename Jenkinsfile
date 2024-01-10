@@ -7,5 +7,13 @@ pipeline {
                 echo 'hello world'
             }
         }
+        stage('Checkout') {
+            steps {
+                // Checks out the source code.
+                checkout scm
+            }
+        }
+
     }
+
 }
