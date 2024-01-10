@@ -18,28 +18,24 @@ pipeline {
                 sh './create.sh'
             }
         }
-        stage('Docker Compose') {
+        stage('Test Docker') {
             steps {
-                dir('backend') {
-                    script {
-                        // Run Docker Compose up
-                        sh 'docker-compose up -d'
-                        // Wait for services to be up
-                        sh 'sleep 30'
-                    }
+                script {
+                    sh 'docker ps'
                 }
             }
         }
-        // stage('Test') {
-        //     steps {
-        //         dir('backend') {
-        //             script {
-        //                 // Your test commands here
-        //                 sh './run-tests.sh'
-        //             }
-        //         }
-        //     }
-        // }
+
+    // stage('Test') {
+    //     steps {
+    //         dir('backend') {
+    //             script {
+    //                 // Your test commands here
+    //                 sh './run-tests.sh'
+    //             }
+    //         }
+    //     }
+    // }
     }
     post {
         success {
@@ -47,12 +43,6 @@ pipeline {
         }
         failure {
             echo 'Build failed!'
-        }
-        always {
-            // Clean up the workspace to free space.
-            dir('backend') {
-                sh 'docker-compose down'
-            }
         }
     }
 }
