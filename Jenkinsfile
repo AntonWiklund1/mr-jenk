@@ -13,18 +13,6 @@ pipeline {
                 sh './create.sh'
             }
         }
-        stage('Check Java Version') {
-            steps {
-                sh 'java -version'
-            }
-        }
-        stage('Test Docker') {
-            steps {
-                script {
-                    sh 'docker ps'
-                }
-            }
-        }
         stage('Start Services') {
             steps {
                 script {
@@ -34,7 +22,7 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
+        stage('Unit Test') {
             steps {
                 dir('backend/microservices/user-ms/') {
                     sh 'mvn test'
