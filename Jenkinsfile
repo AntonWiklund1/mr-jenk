@@ -25,17 +25,6 @@ pipeline {
                 }
             }
         }
-
-    // stage('Test') {
-    //     steps {
-    //         dir('backend') {
-    //             script {
-    //                 // Your test commands here
-    //                 sh './run-tests.sh'
-    //             }
-    //         }
-    //     }
-    // }
     }
     post {
         success {
@@ -46,3 +35,4 @@ pipeline {
         }
     }
 }
+    
