@@ -41,7 +41,7 @@ public class AuthenticateAndGetTokenTest {
 
     @Test
     public void test_returns_jwt_token() throws Exception {
-        AuthRequest authRequest = new AuthRequest("admin", "password");
+        AuthRequest authRequest = new AuthRequest("", "password");
         User user = new User("1", "username", "email", "password", "role", "avatarImagePath");
         when(userRepository.findByName(authRequest.getUsername())).thenReturn(Optional.of(user));
         when(passwordEncoder.matches(authRequest.getPassword(), user.getPassword())).thenReturn(true);
