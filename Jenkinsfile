@@ -13,6 +13,11 @@ pipeline {
                 sh './create.sh'
             }
         }
+        stage('Check Java Version') {
+            steps {
+                sh 'java -version'
+            }
+        }
         stage('Test Docker') {
             steps {
                 script {
@@ -42,7 +47,6 @@ pipeline {
                 }
             }
         }
-
     }
     post {
         success {
