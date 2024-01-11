@@ -2,6 +2,10 @@ FROM jenkins/jenkins:lts-jdk11
 
 USER root
 
+# Install Maven
+RUN apt-get update && \
+    apt-get install -y maven
+
 # Install dependencies and tools
 RUN apt-get update && \
     apt-get install -y git libnss3-tools && \
