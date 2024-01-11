@@ -10,7 +10,7 @@ services:
       - "8443:8443"
 
   user-ms:
-    build:
+
       context: ..
       dockerfile: ./backend/microservices/user-ms/Dockerfile
     image: user-ms:latest
