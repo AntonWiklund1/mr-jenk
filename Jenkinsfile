@@ -44,7 +44,7 @@ pipeline {
                 always {
                     dir('backend/microservices/user-ms/') {
                         sh 'ls -lR target/surefire-reports'
-                        junit '**/target/surefire-reports/TEST-*.xml'
+                        junit 'target/surefire-reports/TEST-*.xml'
                     }
                 }
             }
