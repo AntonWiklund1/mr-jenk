@@ -34,6 +34,19 @@ pipeline {
                 }
             }
         }
+        stage('Test') {
+            steps {
+                // Run tests - they will interact with services started by Docker Compose
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    // Collect test reports
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                }
+            }
+        }
+
     }
     post {
         success {
