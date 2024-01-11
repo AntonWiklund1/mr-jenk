@@ -43,7 +43,7 @@ pipeline {
             }
             post {
                 always {
-                    junit '/backend/microservices/media-ms/target/surefire-reports/TEST-*.xml'
+                    junit '**/target/surefire-reports/TEST-*.xml'
                 }
             }
         }
