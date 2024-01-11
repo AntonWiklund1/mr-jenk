@@ -15,15 +15,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
 
-public class AuthenticateandgettokenTest {
+public class AuthenticateAndGetTokenTest {
 
     @Mock
     private UserRepository userRepository;
@@ -63,7 +60,6 @@ public class AuthenticateandgettokenTest {
         assertEquals("jwt_token", token);
     }
 
-
     @Test
     public void test_returns_404_when_user_not_found() {
         AuthRequest authRequest = new AuthRequest("nonexistentUser", "password");
@@ -72,9 +68,5 @@ public class AuthenticateandgettokenTest {
         ResponseEntity<?> response = authController.authenticateAndGetToken(authRequest);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        // Optionally, you can also check the response body message if it's relevant
     }
-
-
-    // ... other test methods
 }

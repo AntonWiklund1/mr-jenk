@@ -25,6 +25,15 @@ pipeline {
                 }
             }
         }
+        stage('Start Services') {
+            steps {
+                script {
+                    dir('backend') {
+                        sh 'docker-compose up -d'
+                    }
+                }
+            }
+        }
     }
     post {
         success {
@@ -35,4 +44,3 @@ pipeline {
         }
     }
 }
-    
