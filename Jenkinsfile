@@ -37,12 +37,12 @@ pipeline {
         stage('Test') {
             steps {
                 dir('backend/microservices/user-ms/') {
-                    sh 'mvn test'
-                    sh 'ls -lR target/surefire-reports'
+                    sh 'mvn test'   
                 }
             }
             post {
                 always {
+                    sh 'ls -lR target/surefire-reports'
                     junit '**/target/surefire-reports/TEST-*.xml'
                 }
             }
