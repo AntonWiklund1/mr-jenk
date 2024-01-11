@@ -38,6 +38,7 @@ pipeline {
             steps {
                 dir('backend/microservices/user-ms/') {
                     sh 'mvn test'
+                    sh 'ls -lR target/surefire-reports'
                 }
             }
             post {
