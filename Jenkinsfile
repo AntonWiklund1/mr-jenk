@@ -31,7 +31,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                dir('backend') {
+                dir('backend/microservices/user-ms/') {
                     sh 'mvn test'
                 }
             }
