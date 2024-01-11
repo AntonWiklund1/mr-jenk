@@ -31,8 +31,9 @@ pipeline {
         }
         stage('Test') {
             steps {
-                // Run tests - they will interact with services started by Docker Compose
-                sh 'mvn test'
+                dir('backend') {
+                    sh 'mvn test'
+                }
             }
             post {
                 always {
