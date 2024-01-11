@@ -24,9 +24,6 @@ import java.util.Optional;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private String encodedSecretKey = "xajG3FHq3hTBkY56D9/0PJKJGqPf2bpXKAcC6KTHsZo=";
-    private Key SECRET = Keys.hmacShaKeyFor(Base64.getDecoder().decode(encodedSecretKey));
-
     @Autowired
     private JWTService jwtService;
 
