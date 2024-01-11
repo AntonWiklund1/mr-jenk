@@ -69,4 +69,16 @@ public class AuthenticateAndGetTokenTest {
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
+
+    @Test
+    public void test_returns_401_when_password_is_incorrect() {
+        AuthRequest authRequest = new AuthRequest("username", "password");
+        User user = new User("1", "username", "email", "password", "ROLE_CLIENT", "avatarImagePath");
+        when(userRepository.findByName(authRequest.getUsername())).thenReturn(Optional.of(user));
+        when(passwordEncoder.matches(authRequest.getPassword(), user.getPassword())).thenReturn(false);
+
+        ResponseEntity<?> response = authController.authenticateAndGetToken(authRequest);
+
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+    }
 }
