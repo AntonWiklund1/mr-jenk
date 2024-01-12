@@ -35,11 +35,17 @@ public class UserService {
     }
 
     public UserDTO convertToUserDTO(User user) {
-        return new UserDTO(user.getId(), user.getName(), user.getRole(), user.getAvatarImagePath());
+        var userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setName(user.getName());
+        userDTO.setRole(user.getRole());
+        userDTO.setAvatarImagePath(user.getAvatarImagePath());
+        System.out.println("userDTO fiudshgiufhd: " + userDTO);
+        return userDTO;
     }
 
-    public User createUser(User user)
-            throws ConstraintViolationException, UserCollectionException, NoSuchAlgorithmException {
+    public UserDTO createUser(User user)
+            throws ConstraintViolationException, UserCollectionException {
         ValidateUser.validateUser(user);
         Optional<User> userOptional = userRepository.findByName(user.getName());
         if (userOptional.isPresent()) {
@@ -50,7 +56,11 @@ public class UserService {
             throw new UserCollectionException(UserCollectionException.UserAlreadyExistException());
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+
+        userRepository.save(user);
+
+        // get userDTO
+        return convertToUserDTO(user);
     }
 
     public List<UserDTO> getAllUsers() {

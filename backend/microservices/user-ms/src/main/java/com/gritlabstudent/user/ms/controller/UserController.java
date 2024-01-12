@@ -37,9 +37,6 @@ public class UserController {
         try {
             System.out.println("we are here User: " + user);
             userService.createUser(user);
-            String topic = "user_registration";
-            String payload = convertUserToJson(user);
-            KafkaService.sendToTopic(topic, payload);
             var userDTO = userService.getUserById(user.getId());
             return new ResponseEntity<UserDTO>(userDTO, HttpStatus.CREATED);
         } catch (ConstraintViolationException e) {

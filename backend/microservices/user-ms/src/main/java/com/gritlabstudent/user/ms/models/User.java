@@ -1,6 +1,7 @@
 package com.gritlabstudent.user.ms.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 @Document(collection = "users")
 public class User {
     @Id
