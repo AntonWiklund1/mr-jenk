@@ -3,6 +3,7 @@
     <div class="productsList">
         <div *ngFor="let product of products" class="productCard" [ngClass]="{'expanded': product.isExpanded}">
             <div class="productImageDiv">
+                
                 <img [src]="getMediaUrl(product.id)" alt="" class="productImage">
             </div>
             <div class="productInfoDiv">
