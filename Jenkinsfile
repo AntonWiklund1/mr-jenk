@@ -11,6 +11,7 @@ pipeline {
         }
         stage('Generate Certificates') {
             steps {
+                
                 sh './create.sh'
             }
         }
