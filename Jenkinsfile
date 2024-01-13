@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     dir('backend') {
-                        sh 'sudo docker-compose up -d'
+                        sh 'docker-compose up -d'
                     }
                 }
             }
