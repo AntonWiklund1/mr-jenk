@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class UserService {
   private apiCreateUserUrl = 'https://localhost:8443/api/users';
   private apiGetUserUrl = 'https://localhost:8443/api/users';
-  private apiLogInUrl = 'https://localhost:8443/api/auth';
+  private apiLogInUrl = 'https://localhost:8443/api/auth'; // checking out
   constructor(private http: HttpClient) {}
 
   // Create a new user with JWT token
