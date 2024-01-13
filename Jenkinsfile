@@ -18,7 +18,8 @@ pipeline {
             steps {
                 script {
                     dir('backend') {
-                        sh 'docker-compose up'
+                        //start user-ms
+                        sh 'docker-compose up -d user-ms'
                     }
                 }
             }
