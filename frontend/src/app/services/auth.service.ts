@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class AuthService {
-    private authUrl = 'https://localhost:8443/api/auth'; // Your API endpoint
+    private authUrl = 'https://139.59.152.207:8443/api/auth'; // Your API endpoint
 
     constructor(private http: HttpClient) {}
 

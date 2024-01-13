@@ -6,12 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProductService {
-  private apiUrlGetAllproducts = 'https://localhost:8443/api/products'; 
-  private apiUrlGetProductByUerId = 'https://localhost:8443/api/products/user/'; 
-  private apiUrlAddProduct = 'https://localhost:8443/api/products'; 
-  private apiUrlEditProduct = 'https://localhost:8443/api/products'; 
-  private apiUrlGetProductById = 'https://localhost:8443/api/products'; 
-  private apiUrlDeleteProduct = 'https://localhost:8443/api/products'; 
+  private apiUrlGetAllproducts = 'https://139.59.152.207:8443/api/products'; 
+  private apiUrlGetProductByUerId = 'https://139.59.152.207:8443/api/products/user/'; 
+  private apiUrlAddProduct = 'https://139.59.152.207:8443/api/products'; 
+  private apiUrlEditProduct = 'https://139.59.152.207:8443/api/products'; 
+  private apiUrlGetProductById = 'https://139.59.152.207:8443/api/products'; 
+  private apiUrlDeleteProduct = 'https://139.59.152.207:8443/api/products'; 
   private id: string | undefined;
 
   constructor(private http: HttpClient) {}
