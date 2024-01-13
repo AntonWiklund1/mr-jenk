@@ -9,9 +9,19 @@ pipeline {
                 checkout scm
             }
         }
+        //docker down
+        stage('Stop Services') {
+            steps {
+                script {
+                    dir('backend') {
+                        sh 'docker-compose down'
+                    }
+                }
+            }
+        }
         stage('Generate Certificates') {
             steps {
-                
+
                 sh './create.sh'
             }
         }
@@ -20,7 +30,7 @@ pipeline {
                 script {
                     dir('backend') {
                         //start user-ms
-                        sh 'docker-compose up -d'
+                        sh 'docker-compose up -d --build'
                     }
                 }
             }
