@@ -7,15 +7,12 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
-    private authUrl = environment.baseUrl; // Your API endp
-
     constructor(private http: HttpClient) {
-      console.log(this.authUrl); // TODO: Why!
     }
     //get jwt token
     getJwtToken(username: string, password: string) {
         console.log("getJwtToken", username, password)  ;
-        return this.http.post(this.authUrl, { username, password });
+        return this.http.post(environment.baseUrl + "/api/auth", { username, password });
       }
       
 }
