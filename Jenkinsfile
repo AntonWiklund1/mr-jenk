@@ -52,19 +52,23 @@ pipeline {
     post {
         success {
             echo 'Build succeeded!'
+            // Get the build user's username
+            def buildUser = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause).getUserId()
             // send email notification with username
             emailext(
                 subject: 'Build Success',
-                body: "Build Success by ${env.BUILD_USER}",
+                body: "Build Success by ${buildUser}",
                 to: 'awiklund76@gmail.com'
             )
         }
         failure {
             echo 'Build failed!'
+            // Get the build user's username
+            def buildUser = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause).getUserId()
             // send email notification with username
             emailext(
                 subject: 'Build Failed',
-                body: "Build Failed by ${env.BUILD_USER}",
+                body: "Build Failed by ${buildUser}",
                 to: 'awiklund76@gmail.com'
             )
         }
