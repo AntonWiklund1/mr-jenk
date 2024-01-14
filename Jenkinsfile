@@ -52,7 +52,7 @@ pipeline {
     post {
         success {
             echo 'Build succeeded!'
-            def buildUser = currentBuild.changeSets.collectMany { changeSet ->
+            String buildUser = currentBuild.changeSets.collectMany { changeSet ->
                 changeSet.items.collect { change -> change.author.fullName }
             }.join(', ')
 
@@ -64,7 +64,7 @@ pipeline {
         }
         failure {
             echo 'Build failed!'
-            def buildUser = currentBuild.changeSets.collectMany { changeSet ->
+            String buildUser = currentBuild.changeSets.collectMany { changeSet ->
                 changeSet.items.collect { change -> change.author.fullName }
                 }.join(', ')
 
