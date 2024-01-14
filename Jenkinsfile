@@ -52,25 +52,18 @@ pipeline {
     post {
         success {
             echo 'Build succeeded!'
-            String buildUser = currentBuild.changeSets.collectMany { changeSet ->
-                changeSet.items.collect { change -> change.author.fullName }
-            }.join(', ')
 
             emailext(
-            subject: "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} - SUCCESS",
-            body: "Build succeeded by ${buildUser}.",
+            subject: 'Build succeeded',
+            body: 'Build succeeded by winner',
             to: 'awiklund76@gmail.com'
         )
         }
         failure {
             echo 'Build failed!'
-            String buildUser = currentBuild.changeSets.collectMany { changeSet ->
-                changeSet.items.collect { change -> change.author.fullName }
-                }.join(', ')
-
             emailext(
-            subject: "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} - FAILED",
-            body: "Build failed by ${buildUser}.",
+            subject: 'Build failed',
+            body: 'Build failed by loser',
             to: 'awiklund76@gmail.com'
         )
         }
