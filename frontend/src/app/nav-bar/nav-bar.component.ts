@@ -85,7 +85,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
       let avatarUrl = avatarPath;
       if (!avatarPath.startsWith('http') && !avatarPath.startsWith('/assets')) {
         // If avatarPath is neither a full URL nor an asset path, assume it's a relative path from the server
-        avatarUrl = `https://localhost:8443/${avatarPath}`;
+        avatarUrl = `https://139.59.152.207:8443/${avatarPath}`;
       }
       // Dispatch the action with the correct URL
       this.store.dispatch(AvatarActions.updateProfilePicture({ url: avatarUrl }));
