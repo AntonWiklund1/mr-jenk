@@ -57,7 +57,7 @@ pipeline {
             // send email notification with username
             emailext(
                 subject: 'Build Success',
-                body: "Build Success by ${buildUser}",
+                body: "Build Success yes by ${buildUser}",
                 to: 'awiklund76@gmail.com'
             )
         }
