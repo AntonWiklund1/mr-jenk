@@ -56,7 +56,7 @@ pipeline {
 
             emailext(
                 subject: 'Build Success',
-                body: "${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}!",
+                body: "build success " + ${BUILD_USER},
                 to: 'awiklund76@gmail.com'
             )
         }
@@ -65,7 +65,7 @@ pipeline {
             // send email notification with username
             emailext(
                 subject: 'Build Failed',
-                body: "${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}!",
+                body: "build failed " + ${BUILD_USER},
                 to: 'awiklund76@gmail.com'
             )
         }
