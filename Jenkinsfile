@@ -48,22 +48,22 @@ pipeline {
                     }
                 }
             }
-        } 
+        }
     }
     post {
         success {
-            echo 'Build succeeded!'
+            echo 'Build succeeded!',
             // send email notification with username
-            emailext (
+            emailext(
                 subject: "Build Success",
                 body: "Build Success by ${DEFAULT_USER}",
                 to: "awiklund76@gmail.com"
             )
         }
         failure {
-            echo 'Build failed!'
+            echo 'Build failed!',
             // send email notification with username
-            emailext (
+            emailext(
                 subject: "Build Failed",
                 body: "Build Failed by ${DEFAULT_USER}",
                 to: "awiklund76@gmail.com"
