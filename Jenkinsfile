@@ -30,7 +30,7 @@ pipeline {
                 script {
                     dir('backend') {
                         //start user-ms
-                        sh 'docker-compose up -d --build frontend'
+                        sh 'docker-compose up -d --build'
                     }
                 }
             }
