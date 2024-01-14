@@ -53,6 +53,9 @@ pipeline {
     post {
         success {
             echo 'Build succeeded!'
+            // send email notification
+            
+            
         }
         failure {
             echo 'Build failed!'
