@@ -52,7 +52,7 @@ pipeline {
     }
     post {
         success {
-            echo 'Build succeeded!',
+            echo 'Build succeeded!'
             // send email notification with username
             emailext(
                 subject: "Build Success",
@@ -61,7 +61,7 @@ pipeline {
             )
         }
         failure {
-            echo 'Build failed!',
+            echo 'Build failed!'
             // send email notification with username
             emailext(
                 subject: "Build Failed",
