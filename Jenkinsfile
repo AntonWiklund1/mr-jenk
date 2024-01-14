@@ -50,26 +50,29 @@ pipeline {
         }
     }
     post {
-    success {
-        script {
-            def buildUser = currentBuild.rawBuild.getCause(hudson.model.Cause.UserIdCause)?.userId ?: 'unknown'
-            emailext(
-                subject: "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} - SUCCESS",
-                body: "Build succeeded by ${buildUser}.",
-                to: 'awiklund76@gmail.com'
-            )
-        }
-    }
-    failure {
-        script {
-            def buildUser = currentBuild.rawBuild.getCause(hudson.model.Cause.UserIdCause)?.userId ?: 'unknown'
-            emailext(
-                subject: "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} - FAILED",
-                body: "Build failed by ${buildUser}.",
-                to: 'awiklund76@gmail.com'
-            )
-        }
-    }
-}
+        success {
+            echo 'Build succeeded!'
+            def buildUser = currentBuild.changeSets.collectMany { changeSet ->
+                changeSet.items.collect { change -> change.author.fullName }
+            }.join(', ')
 
+            emailext(
+            subject: "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} - SUCCESS",
+            body: "Build succeeded by ${buildUser}.",
+            to: 'awiklund76@gmail.com'
+        )
+        }
+        failure {
+            echo 'Build failed!'
+            def buildUser = currentBuild.changeSets.collectMany { changeSet ->
+                changeSet.items.collect { change -> change.author.fullName }
+                }.join(', ')
+
+            emailext(
+            subject: "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} - FAILED",
+            body: "Build failed by ${buildUser}.",
+            to: 'awiklund76@gmail.com'
+        )
+        }
+    }
 }
