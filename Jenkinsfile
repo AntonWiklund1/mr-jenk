@@ -21,7 +21,6 @@ pipeline {
         }
         stage('Generate Certificates') {
             steps {
-
                 sh './create.sh'
             }
         }
@@ -55,20 +54,19 @@ pipeline {
             echo 'Build succeeded!'
             // send email notification with username
             emailext(
-                subject: "Build Success",
-                body: "Build Success by ${DEFAULT_USER}",
-                to: "awiklund76@gmail.com"
+                subject: 'Build Success',
+                body: "Build Success by ${BUILD_USER}",
+                to: 'awiklund76@gmail.com'
             )
         }
         failure {
             echo 'Build failed!'
             // send email notification with username
             emailext(
-                subject: "Build Failed",
-                body: "Build Failed by ${DEFAULT_USER}",
-                to: "awiklund76@gmail.com"
+                subject: 'Build Failed',
+                body: "Build Failed by ${BUILD_USER}",
+                to: 'awiklund76@gmail.com'
             )
         }
     }
-
 }
