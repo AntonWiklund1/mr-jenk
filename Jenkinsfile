@@ -52,11 +52,10 @@ pipeline {
     post {
         success {
             echo 'Build succeeded!'
-            // Get the build user's username
-
+            // send email notification with username
             emailext(
                 subject: 'Build Success',
-                body: "build success " + ${BUILD_USER},
+                body: "Build success by ${BUILD_USER}",
                 to: 'awiklund76@gmail.com'
             )
         }
@@ -65,7 +64,7 @@ pipeline {
             // send email notification with username
             emailext(
                 subject: 'Build Failed',
-                body: "build failed " + ${BUILD_USER},
+                body: "Build failed by ${BUILD_USER}",
                 to: 'awiklund76@gmail.com'
             )
         }
