@@ -17,6 +17,7 @@ import { authReducer } from './state/auth/auth.reducer';
 import { avatarReducer } from './state/avatar/profile.reducer'; // Import the avatar reducer
 import { environment } from '../environments/environment';
 import { MediaManagementComponent } from './media-management/media-management.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -31,13 +32,14 @@ import { MediaManagementComponent } from './media-management/media-management.co
 
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
     StoreModule.forRoot({
       auth: authReducer,
-      avatar: avatarReducer, 
+      avatar: avatarReducer,
     }),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
@@ -48,4 +50,4 @@ import { MediaManagementComponent } from './media-management/media-management.co
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

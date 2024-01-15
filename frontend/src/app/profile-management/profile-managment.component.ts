@@ -51,7 +51,7 @@ export class ProfileManagementComponent implements OnInit {
     this.isAdmin$ = this.store.select(selectUserRole).pipe(
       map(role => role === 'ROLE_SELLER')
     );
-    
+
   }
 
   ngOnInit(): void {

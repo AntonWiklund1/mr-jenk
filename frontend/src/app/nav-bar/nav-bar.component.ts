@@ -74,7 +74,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
             return this.mediaService.getAvatar(userId, token);
           }),
           catchError(error => {
-            
+
             // Return the path to the image in the assets folder
             return of('/assets/images/default-avatar.png');
           })
@@ -91,11 +91,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
       this.store.dispatch(AvatarActions.updateProfilePicture({ url: avatarUrl }));
     });
   }
-
-
-
-
-
 
   ngOnDestroy(): void {
     this.destroy$.next();

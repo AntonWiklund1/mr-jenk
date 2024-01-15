@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { MediaService } from '../services/media.service';
 
-import * as AuthActions from '../state/auth/auth.actions';
 import { Store } from '@ngrx/store';
 import { AuthState } from '../state/auth/auth.reducer';
 import * as AuthSelectors from '../state/auth/auth.selector';
@@ -36,7 +35,7 @@ export class ProductListComponent {
         console.error(error);
       }
     );
-    
+
     this.loadProducts();
   }
   toggleDescription(product: any) {
