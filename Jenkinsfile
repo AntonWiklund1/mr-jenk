@@ -52,6 +52,8 @@ pipeline {
         stage('Frontend test') {
             steps {
                 dir('frontend') {
+                    sh 'npm install'
+                    sh "npm install -g @angular/cli@17"
                     sh 'ng test'
                 }
             }
