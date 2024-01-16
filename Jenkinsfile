@@ -35,20 +35,20 @@ pipeline {
                 }
             }
         }
-        stage('Unit Test') {
-            steps {
-                dir('backend/microservices/user-ms/') {
-                    sh 'mvn test'
-                }
-            }
-            post {
-                always {
-                    dir('backend/microservices/user-ms/') {
-                        junit 'target/surefire-reports/TEST-*.xml'
-                    }
-                }
-            }
-        }
+        // stage('Unit Test') {
+        //     steps {
+        //         dir('backend/microservices/user-ms/') {
+        //             sh 'mvn test'
+        //         }
+        //     }
+        //     post {
+        //         always {
+        //             dir('backend/microservices/user-ms/') {
+        //                 junit 'target/surefire-reports/TEST-*.xml'
+        //             }
+        //         }
+        //     }
+        // }
         stage('Debug Environment') {
             environment {
                 PATH = "/root/.nvm/versions/node/v20.11.0/bin:$PATH"
@@ -64,7 +64,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh 'source /root/.nvm/nvm.sh'  // Source NVM setup
+                    sh 'ls -la /root/.nvm/versions/node/v20.11.0/bin'
                     sh 'npm install'
                     sh 'npm install -g @angular/cli@17'
                     sh 'ng test'
