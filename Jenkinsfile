@@ -52,6 +52,11 @@ pipeline {
             steps {
                 dir('frontend') {
                     sh '/root/.nvm/versions/node/v20.11.0/bin/ng test'
+                    // change owner of coverage folder
+                    sh 'sudo chown -R jenkins:jenkins coverage'
+                    sh 'sudo chmod -R 777 coverage'
+                    sh 'sudo chown -R jenkins:jenkins /root/.nvm/versions/node/v20.11.0/bin/ng'
+                    sh 'sudo chmod -R 777 /root/.nvm/versions/node/v20.11.0/bin/ng'
                 }
             }
         }
