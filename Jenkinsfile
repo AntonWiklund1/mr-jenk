@@ -29,8 +29,8 @@ pipeline {
                 script {
                     dir('backend') {
                         //start user-ms
-                        sh 'docker-compose build frontend'
                         sh 'docker-compose up -d'
+
                     }
                 }
             }
@@ -48,7 +48,17 @@ pipeline {
         //             }
         //         }
         //     }
+        // 
         // }
+        stage('Stop services') {
+            steps {
+                script {
+                    dir('backend') {
+                        sh 'docker-compose down'
+                    }
+                }
+            }
+        }
         stage('Frontend test') {
             environment {
                 PATH = "/root/.nvm/versions/node/v20.11.0/bin:$PATH"
@@ -56,6 +66,7 @@ pipeline {
             steps {
                 script {
                     dir('frontend') {
+                        sh 'pwd'
                         sh 'npm install'
                         sh 'npm install -g @angular/cli@17'
                         sh 'ng test --browsers=ChromeHeadless --watch=false'
