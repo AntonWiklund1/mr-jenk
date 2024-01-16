@@ -50,10 +50,15 @@ pipeline {
             }
         }
         stage('Frontend test') {
+            environment {
+                PATH = "$PATH:/root/.nvm/versions/node/v20.11.0/bin/npm"  // Replace /path/to/npm with the actual path to npm on your system
+            }
+
             steps {
                 dir('frontend') {
+                    sh ''
                     sh 'npm install'
-                    sh "npm install -g @angular/cli@17"
+                    sh 'npm install -g @angular/cli@17'
                     sh 'ng test'
                 }
             }
@@ -69,8 +74,7 @@ pipeline {
             to: 'awiklund76@gmail.com'
             )
 
-            //deploy to staging
-
+        //deploy to staging
         }
         failure {
             echo 'Build failed!'
