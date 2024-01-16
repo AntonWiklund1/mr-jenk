@@ -56,6 +56,8 @@ pipeline {
             steps {
                 script {
                     sh 'whoami' // Print the current user
+                    sh 'ls -l /root/.nvm/versions/node/v20.11.0/bin/npm'
+                    sh 'ls -l /root/.nvm/versions/node/v20.11.0/bin/ng'
                     sh 'npm --version' // Print npm version
                     sh 'ng --version' // Print Angular CLI version
                 }
