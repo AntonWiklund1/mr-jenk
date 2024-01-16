@@ -64,11 +64,10 @@ pipeline {
             }
             steps {
                 script {
-                    sh 'whoami' // Print the current user
-                    sh 'ls -l /root/.nvm/versions/node/v20.11.0/bin/npm'
-                    sh 'ls -l /root/.nvm/versions/node/v20.11.0/bin/ng'
-                    sh 'npm --version' // Print npm version
-                    sh 'ng --version' // Print Angular CLI version
+                    sh 'source /root/.nvm/nvm.sh'  // Source NVM setup
+                    sh 'npm install'
+                    sh 'npm install -g @angular/cli@17'
+                    sh 'ng test'
                 }
                 dir('frontend') {
                     sh 'npm install'
