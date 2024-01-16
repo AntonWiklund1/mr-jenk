@@ -51,7 +51,7 @@ pipeline {
         stage('Frontend test') {
             steps {
                 dir('frontend') {
-                    sh '/root/.nvm/versions/node/v20.11.0/lib/node_modules/@angular/cli/bin/ng test'
+                    sh '/root/.nvm/versions/node/v20.11.0/bin/ng test'
                 }
             }
         }
