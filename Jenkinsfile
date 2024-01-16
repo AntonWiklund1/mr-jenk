@@ -48,6 +48,13 @@ pipeline {
                 }
             }
         }
+        stage('Frontend test') {
+            steps {
+                dir('frontend') {
+                    sh 'ng test'
+                }
+            }
+        }
     }
     post {
         success {
