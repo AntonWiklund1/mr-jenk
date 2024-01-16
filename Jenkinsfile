@@ -65,14 +65,12 @@ pipeline {
             steps {
                 script {
                     sh 'ls -la /root/.nvm/versions/node/v20.11.0/bin'
-                    sh 'npm install'
-                    sh 'npm install -g @angular/cli@17'
-                    sh 'ng test'
-                }
-                dir('frontend') {
-                    sh 'npm install'
-                    sh 'npm install -g @angular/cli@17'
-                    sh 'ng test'
+                    sh 'ls -la'
+                    dir('frontend') {
+                        sh 'npm install'
+                        sh 'npm install -g @angular/cli@17'
+                        sh 'ng test'
+                    }
                 }
             }
         }
