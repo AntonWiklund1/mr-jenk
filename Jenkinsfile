@@ -54,6 +54,11 @@ pipeline {
                 PATH = "/root/.nvm/versions/node/v20.11.0/bin:$PATH"
             }
             steps {
+                script {
+                    sh 'whoami' // Print the current user
+                    sh 'npm --version' // Print npm version
+                    sh 'ng --version' // Print Angular CLI version
+                }
                 dir('frontend') {
                     sh 'npm install'
                     sh 'npm install -g @angular/cli@17'
