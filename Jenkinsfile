@@ -52,6 +52,8 @@ pipeline {
         stage('Frontend test') {
             steps {
                 dir('frontend') {
+                    sh 'chmod 777 /root/.nvm/versions/node/v20.11.0/bin/ng'
+                    sh 'ls -la /root/.nvm/versions/node/v20.11.0/bin/ng'
                     sh '/root/.nvm/versions/node/v20.11.0/bin/ng test'
                 }
             }
@@ -68,7 +70,7 @@ pipeline {
             )
 
             //deploy to staging
-            
+
         }
         failure {
             echo 'Build failed!'
