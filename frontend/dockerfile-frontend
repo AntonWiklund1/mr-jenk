@@ -20,7 +20,7 @@ RUN ng build --configuration=production
 RUN rm /etc/nginx/conf.d/default.conf
 
 # Copy the built application to NGINX's web directory
-COPY dist/buy-01 /usr/share/nginx/html
+COPY /usr/src/app/dist/buy-01 /usr/share/nginx/html
 
 # Copy SSL certificates
 COPY backend/microservices/api-gateway/src/main/resources/localhost.pem /etc/ssl/certs/

@@ -65,7 +65,10 @@ pipeline {
             subject: 'Build succeeded',
             body: 'Build succeeded by winner',
             to: 'awiklund76@gmail.com'
-        )
+            )
+
+            //deploy to staging
+            
         }
         failure {
             echo 'Build failed!'
