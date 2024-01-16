@@ -19,17 +19,15 @@ RUN ng build --configuration=production
 # Remove the default NGINX configuration
 RUN rm /etc/nginx/conf.d/default.conf
 
+# Copy NGINX configuration
+COPY frontend/nginx.conf /etc/nginx/conf.d/
+
 # Copy the built application to NGINX's web directory
-COPY /usr/src/app/dist/buy-01 /usr/share/nginx/html
+COPY /dist/buy-01 /usr/share/nginx/html
 
 # Copy SSL certificates
 COPY backend/microservices/api-gateway/src/main/resources/localhost.pem /etc/ssl/certs/
 COPY backend/microservices/api-gateway/src/main/resources/localhost-key.pem /etc/ssl/private/
-
-# Copy NGINX configuration
-COPY frontend/nginx.conf /etc/nginx/conf.d/
-
-RUN chmod 777 /root/.nvm/versions/node/v20.11.0/bin/ng
 
 # Expose ports and start NGINX
 EXPOSE 80 443
