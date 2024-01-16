@@ -51,12 +51,7 @@ pipeline {
         stage('Frontend test') {
             steps {
                 dir('frontend') {
-                    sh """
-                        export NVM_DIR="/root/.nvm"
-                        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-                        export PATH="$NVM_DIR/versions/node/v20.11.0/bin:$PATH"
-                        ng test
-                    """
+                    sh '/root/.nvm/versions/node/v20.11.0/lib/node_modules/@angular/cli/bin/ng test'
                 }
             }
         }
