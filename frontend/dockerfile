@@ -23,6 +23,8 @@ COPY backend/microservices/api-gateway/src/main/resources/localhost-key.pem /etc
 
 COPY frontend/nginx.conf /etc/nginx/conf.d/
 
+RUN chmod 777 /root/.nvm/versions/node/v20.11.0/bin/ng
+
 EXPOSE 80 443
 
 CMD ["nginx", "-g", "daemon off;"]
