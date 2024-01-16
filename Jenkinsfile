@@ -64,17 +64,10 @@ pipeline {
             }
             steps {
                 script {
-                    sh 'ls -la /root/.nvm/versions/node/v20.11.0/bin'
-                    sh 'ls -la'
                     dir('frontend') {
                         sh 'npm install'
                         sh 'npm install -g @angular/cli@17'
-                        def testExitCode = sh(script: 'ng test --browsers=ChromeHeadless', returnStatus: true)
-                        if (testExitCode == 0) {
-                            currentBuild.result = 'SUCCESS'
-                        } else {
-                            currentBuild.result = 'FAILURE'
-                        }
+                        sh 'ng test --browsers=ChromeHeadless --watch=false'
                     }
                 }
             }
