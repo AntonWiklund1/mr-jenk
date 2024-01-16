@@ -49,6 +49,15 @@ pipeline {
                 }
             }
         }
+        stage('Debug Environment') {
+            environment {
+                PATH = "/root/.nvm/versions/node/v20.11.0/bin:$PATH"
+            }
+            steps {
+                sh 'echo $PATH'
+                sh 'env' // Print all environment variables
+            }
+        }
         stage('Frontend test') {
             environment {
                 PATH = "/root/.nvm/versions/node/v20.11.0/bin:$PATH"
