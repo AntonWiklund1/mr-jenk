@@ -9,16 +9,6 @@ pipeline {
                 checkout scm
             }
         }
-        //docker down
-        stage('Stop Services') {
-            steps {
-                script {
-                    dir('backend') {
-                        sh 'docker-compose down'
-                    }
-                }
-            }
-        }
         stage('Generate Certificates') {
             steps {
                 sh './create.sh'
@@ -30,26 +20,24 @@ pipeline {
                     dir('backend') {
                         //start user-ms
                         sh 'docker-compose up -d'
-
                     }
                 }
             }
         }
-        // stage('Unit Test') {
-        //     steps {
-        //         dir('backend/microservices/user-ms/') {
-        //             sh 'mvn test'
-        //         }
-        //     }
-        //     post {
-        //         always {
-        //             dir('backend/microservices/user-ms/') {
-        //                 junit 'target/surefire-reports/TEST-*.xml'
-        //             }
-        //         }
-        //     }
-        // 
-        // }
+        stage('Unit Test') {
+            steps {
+                dir('backend/microservices/user-ms/') {
+                    sh 'mvn test'
+                }
+            }
+            post {
+                always {
+                    dir('backend/microservices/user-ms/') {
+                        junit 'target/surefire-reports/TEST-*.xml'
+                    }
+                }
+            }
+        }
         stage('Stop services') {
             steps {
                 script {
@@ -78,22 +66,21 @@ pipeline {
     post {
         success {
             echo 'Build succeeded!'
-
             emailext(
-            subject: 'Build succeeded',
-            body: 'Build succeeded by winner',
-            to: 'awiklund76@gmail.com'
+                subject: 'Build succeeded',
+                body: 'Build succeeded by winner',
+                to: 'awiklund76@gmail.com'
             )
-
-        //deploy to staging
+            //deploy to another droplet
+            
         }
         failure {
             echo 'Build failed!'
             emailext(
-            subject: 'Build failed',
-            body: 'Build failed by loser',
-            to: 'awiklund76@gmail.com'
-        )
+                subject: 'Build failed',
+                body: 'Build failed by loser',
+                to: 'awiklund76@gmail.com'
+            )
         }
     }
 }
