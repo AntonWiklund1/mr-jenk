@@ -51,12 +51,10 @@ pipeline {
         }
         stage('Frontend test') {
             environment {
-                PATH = "$PATH:/root/.nvm/versions/node/v20.11.0/bin/npm"  // Replace /path/to/npm with the actual path to npm on your system
+                PATH = "/root/.nvm/versions/node/v20.11.0/bin:$PATH"
             }
-
             steps {
                 dir('frontend') {
-                    sh ''
                     sh 'npm install'
                     sh 'npm install -g @angular/cli@17'
                     sh 'ng test'
