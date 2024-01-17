@@ -78,7 +78,8 @@ pipeline {
                     sh '''
                         ssh root@164.90.180.143 "\
                         cd /buy-01 && \
-                        git pull https://github.com/AntonWiklund1/mr-jenk.git && \
+                        cd mr-jenk && \
+                        git pull origin main && \
                         cd mr-jenk && \
                         ./create.sh && \
                         cd backend && \
