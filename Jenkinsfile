@@ -87,7 +87,7 @@ pipeline {
                     ./create.sh && \
                     echo 'Starting Docker containers...' && \
                     cd backend && \
-                    docker-compose up -d \
+                    docker-compose up -d build \
                     "
                 '''
                         echo "Executing SSH command:\n${sshCommand}" // Print the SSH command being executed
