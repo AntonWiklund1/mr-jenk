@@ -5,7 +5,6 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Get the code from a GitHub repository
                 checkout scm
             }
         }
@@ -18,7 +17,6 @@ pipeline {
             steps {
                 script {
                     dir('backend') {
-                        //start user-ms
                         sh 'docker-compose up -d --build'
                     }
                 }
@@ -54,9 +52,8 @@ pipeline {
             steps {
                 script {
                     dir('frontend') {
-                        sh 'pwd'
-                        sh 'npm install'
-                        sh 'npm install -g @angular/cli@17'
+                        sh 'npm i'
+                        sh 'npm i -g @angular/cli@17'
                         sh 'ng test --browsers=ChromeHeadless --watch=false'
                     }
                 }
