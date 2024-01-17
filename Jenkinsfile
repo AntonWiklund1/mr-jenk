@@ -67,20 +67,34 @@ pipeline {
         success {
             echo 'Build succeeded!'
             emailext(
-                subject: 'Build succeeded',
-                body: 'Build succeeded by winner',
-                to: 'awiklund76@gmail.com'
-            )
-            //deploy to another droplet
-            
+            subject: 'Build succeeded',
+            body: 'Build succeeded by winner',
+            to: 'awiklund76@gmail.com'
+        )
+            // Deploy to another droplet
+            sshagent(['jenkins-ssh-key-id']) {
+                script {
+                    // SSH into the DigitalOcean droplet and execute deployment commands
+                    sh '''
+                        ssh root@164.90.180.143 "\
+                        cd /buy-01 && \
+                        git pull https://github.com/AntonWiklund1/mr-jenk.git && \
+                        cd mr-jenk && \
+                        ./create.sh && \
+                        cd backend && \
+                        docker-compose up -d \
+                        "
+                    '''
+                }
+            }
         }
         failure {
             echo 'Build failed!'
             emailext(
-                subject: 'Build failed',
-                body: 'Build failed by loser',
-                to: 'awiklund76@gmail.com'
-            )
+            subject: 'Build failed',
+            body: 'Build failed by loser',
+            to: 'awiklund76@gmail.com'
+        )
         }
     }
 }
