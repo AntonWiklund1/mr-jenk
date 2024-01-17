@@ -65,7 +65,7 @@ pipeline {
     }
     post {
         success {
-            echo 'Build succeeded! '
+            echo 'Build succeeded! Go to https://164.90.180.143:4200/'
             emailext(
         subject: 'Build succeeded',
         body: 'Build succeeded by winner',

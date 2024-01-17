@@ -73,7 +73,7 @@ public class ProductController {
 
         if (productCreationRequest.isEmpty()) {
             // If the request ID does not exist, return a Not Found response
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ndauhdh auh yauhd uyaudy uadh uhuhudhuotFound().build();
         }
 
         // Assuming the ProductCreationRequest entity has a getStatus method
