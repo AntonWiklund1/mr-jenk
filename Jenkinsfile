@@ -59,6 +59,21 @@ pipeline {
                 }
             }
         }
+        stage('Deploy to Production') {
+           steps {
+               script {
+                  ansiblePlaybook(
+                      colorized: true,
+                      credentialsId: 'deployssh',
+                      disableHostKeyChecking: true,
+                      installation: 'Ansible',
+                      inventory: '/etc/ansible',
+                      playbook: './playbook.yml',
+                      vaultTmpPath: ''
+                  )
+               }
+           }
+       }
     }
     post {
         success {
@@ -67,47 +82,26 @@ pipeline {
         subject: 'Build succeeded',
         body: 'Build succeeded by winner',
         to: 'awiklund76@gmail.com'
-    )
-
-            // Deploy to another droplet
-            sshagent(['jenkins-ssh-key-id']) {
-                script {
-                    try {
-                        // SSH into the DigitalOcean droplet and execute deployment commands
-                        def sshCommand = '''
-                    ssh -v root@164.90.180.143 "\
-                    cd /buy-01 && \
-                    cd mr-jenk && \
-                    echo 'Pulling latest changes from GitHub...' && \
-                    git pull origin main && \
-                    echo 'Running create.sh...' && \
-                    ./create.sh && \
-                    echo 'Starting Docker containers...' && \
-                    cd backend && \
-                    docker-compose up -d --build \
-                    "
-                '''
-                        echo "Executing SSH command:\n${sshCommand}" // Print the SSH command being executed
-                        def sshOutput = sh(script: sshCommand, returnStatus: true)
-                        if (sshOutput != 0) {
-                            error "SSH command failed with exit code ${sshOutput}"
-                } else {
-                            echo 'Deployment successful!'
-                        }
-            } catch (Exception e) {
-                        error "Error in SSH execution: ${e.message}"
-                    }
+            )
+        }
+    failure {
+        script {
+            def failedStage = ""
+            def causes = currentBuild.rawBuild.getCauses()
+            for (cause in causes) {
+                if (cause instanceof hudson.model.Cause.UpstreamCause) {
+                    def upstreamProject = cause.getUpstreamProject()
+                    def upstreamBuild = cause.getUpstreamBuild()
+                    failedStage = "${upstreamProject.getName()} #${upstreamBuild.number}"
                 }
             }
+            echo "Failed stage: ${failedStage}"
         }
-
-        failure {
-            echo 'Build failed!'
-            emailext(
+        emailext(
             subject: 'Build failed',
-            body: 'Build failed by loser',
+            body: "Build failed by loser\nFailed stage: ${failedStage}",
             to: 'awiklund76@gmail.com'
-        )
+            )
         }
     }
 }
