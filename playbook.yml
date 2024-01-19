@@ -1,4 +1,7 @@
 ---
+- name: setup env variables
+  shell: bash envset.sh
+  
 - name: Deploy to production
   gather_facts: false
   hosts: deployservers
