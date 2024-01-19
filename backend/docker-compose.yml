@@ -70,12 +70,24 @@ services:
     ports:
       - "4200:443"
 
+  # mongodb:
+  #   image: mongo:latest
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongo-data:/data/db
+
   mongodb:
     image: mongo:latest
     ports:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${mongodb.username}
+      MONGO_INITDB_ROOT_PASSWORD: ${mongodb.password}
+    env_file:
+      - secrets.yml
 
   kafka:
     image: confluentinc/cp-kafka:latest

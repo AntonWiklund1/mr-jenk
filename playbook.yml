@@ -13,7 +13,14 @@
   - name: Run create.sh
     shell: ../buy-01/mr-jenk/create.sh
 
-  - name: Start Docker containers
-    shell: cd ../buy-01/mr-jenk/backend && docker-compose up -d --build
+  #- name: Navigate to Docker compose location
+  #  shell: |
+  # cd ../buy-01/mr-jenk/backend
+  # docker-compose up -d --build
 
-    
+  - name: Run the Docker Compose command
+    docker_compose:
+      project_src: ../buy-01/mr-jenk/backend
+      state: present # not particularly well understood right now
+      env_file: secrets.yml
+      build: yes
