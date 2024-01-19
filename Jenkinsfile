@@ -65,47 +65,39 @@ pipeline {
     }
     post {
         success {
-            echo 'Build succeeded! Go to https://164.90.180.143:4200/'
-            emailext(
-        subject: 'Build succeeded',
-        body: 'Build succeeded by winner',
-        to: 'awiklund76@gmail.com'
-    )
+            sh 'echo "Build succeeded go to https://164.90.180.143:4200"'
 
+            emailext(
+            subject: 'Build succeeded',
+            body: 'Build succeeded by winner',
+            to: 'awiklund76@gmail.com'
+            )
             // Deploy to another droplet
             sshagent(['jenkins-ssh-key-id']) {
                 script {
                     try {
                         // SSH into the DigitalOcean droplet and execute deployment commands
                         def sshCommand = '''
-                    ssh -v root@164.90.180.143 "\
-                    cd /buy-01 && \
-                    cd mr-jenk && \
-                    echo 'Pulling latest changes from GitHub...' && \
-                    git pull origin main && \
-                    echo 'Running create.sh...' && \
-                    ./create.sh && \
-                    echo 'Starting Docker containers...' && \
-                    cd backend && \
-                    docker-compose up -d --build \
-                    "
-                '''
-                        echo "Executing SSH command:\n${sshCommand}" // Print the SSH command being executed
+                            ssh -v root@164.90.180.143 "\
+                            cd /buy-01 && \
+                            cd mr-jenk && \
+                            git pull origin main && \
+                            ./create.sh && \
+                            cd backend && \
+                            docker-compose up -d --build \
+                            "
+                        '''
                         def sshOutput = sh(script: sshCommand, returnStatus: true)
                         if (sshOutput != 0) {
                             error "SSH command failed with exit code ${sshOutput}"
-                } else {
-                            echo 'Deployment successful!'
                         }
-            } catch (Exception e) {
+                    } catch (Exception e) {
                         error "Error in SSH execution: ${e.message}"
                     }
                 }
             }
         }
-
         failure {
-            echo 'Build failed!'
             emailext(
             subject: 'Build failed',
             body: 'Build failed by loser',
