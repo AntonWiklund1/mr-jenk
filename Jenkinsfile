@@ -33,8 +33,7 @@ pipeline {
                     dir('frontend') {
                         sh 'npm install'
                         sh 'npm install -g @angular/cli@17'
-                        sh 'npm list karma-junit-reporter'
-                        sh 'ng test --browsers=ChromeHeadless --watch=false --code-coverage --reporters=junit'
+                        sh 'ng test --browsers=ChromeHeadless --watch=false'
                     }
                 }
             }
