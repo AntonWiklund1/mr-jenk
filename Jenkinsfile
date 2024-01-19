@@ -23,7 +23,7 @@ pipeline {
                     dir('frontend') {
                         sh 'npm install'
                         sh 'npm install -g @angular/cli@17'
-                        sh 'ng test --browsers=ChromeHeadless --watch=false'
+                        sh 'ng test --browsers=ChromeHeadless --watch=false --reporters=junit,progress'
                     }
                 }
             }

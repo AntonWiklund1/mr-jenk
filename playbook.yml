@@ -7,11 +7,11 @@
   tasks:
   - name: Navigate to the repository directory and pull the latest changes
     shell: |
-      cd ./to/buy-01/mr-jenk
+      cd ../buy-01/mr-jenk
       git pull origin main
 
   - name: Run create.sh
-    shell: ./buy-01/mr-jenk/create.sh
+    shell: ../buy-01/mr-jenk/create.sh
 
   - name: Start Docker containers
-    shell: cd ./buy-01/mr-jenk/backend && docker-compose up -d --build
+    shell: cd ../buy-01/mr-jenk/backend && docker-compose up -d --build
