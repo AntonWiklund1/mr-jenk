@@ -14,6 +14,21 @@ pipeline {
                 sh './create.sh'
             }
         }
+        stage('Deploy to Production') {
+            steps {
+                script {
+                    ansiblePlaybook(
+                      colorized: true,
+                      credentialsId: 'deployssh',
+                      disableHostKeyChecking: true,
+                      installation: 'Ansible',
+                      inventory: '/etc/ansible',
+                      playbook: './playbook.yml',
+                      vaultTmpPath: ''
+                  )
+                }
+            }
+        }
         stage('Frontend test') {
             environment {
                 PATH = "/root/.nvm/versions/node/v20.11.0/bin:$PATH"
@@ -61,21 +76,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Production') {
-            steps {
-                script {
-                    ansiblePlaybook(
-                      colorized: true,
-                      credentialsId: 'deployssh',
-                      disableHostKeyChecking: true,
-                      installation: 'Ansible',
-                      inventory: '/etc/ansible',
-                      playbook: './playbook.yml',
-                      vaultTmpPath: ''
-                  )
-                }
-            }
-        }
+        
 
     }
     post {
