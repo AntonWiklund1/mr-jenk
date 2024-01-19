@@ -24,6 +24,26 @@ pipeline {
                 }
             }
         }
+        stage('Frontend test') {
+            environment {
+                PATH = "/root/.nvm/versions/node/v20.11.0/bin:$PATH"
+            }
+            steps {
+                script {
+                    dir('frontend') {
+                        sh 'npm install'
+                        sh 'npm install -g @angular/cli@17'
+                        sh 'npm list karma-junit-reporter'
+                        sh 'ng test --browsers=ChromeHeadless --watch=false --code-coverage --reporters=junit'
+                    }
+                }
+            }
+            post {
+                always {
+                    junit '**/frontend/test-results.xml'
+                }
+            }
+        }
         stage('Unit Test') {
             steps {
                 dir('backend/microservices/user-ms/') {
@@ -47,65 +67,24 @@ pipeline {
                 }
             }
         }
-        stage('Frontend test') {
-            environment {
-                PATH = "/root/.nvm/versions/node/v20.11.0/bin:$PATH"
-            }
-            steps {
-                script {
-                    dir('frontend') {
-                        sh 'npm install'
-                        sh 'npm install -g @angular/cli@17'
-                        sh 'npm list karma-junit-reporter'
-                        sh 'ng test --browsers=ChromeHeadless --watch=false --code-coverage --reporters=junit'
-                    }
-                }
-            }
-            post {
-                always {
-                    junit '**/frontend/test-results.xml'
-                }
-            }
-        }
+        
     }
     post {
         success {
-            sh 'echo "Build succeeded go to https://164.90.180.143:4200"'
+        // ... other steps ...
 
+            // Use the environment variables to set the subject and body dynamically
             emailext(
-            subject: 'Build succeeded',
-            body: 'Build succeeded by winner',
+            subject: "\$PROJECT_NAME - Build # \$BUILD_NUMBER - SUCCESS",
+            body: "Check console output at \$BUILD_URL to view the results.",
             to: 'awiklund76@gmail.com'
-            )
-            // Deploy to another droplet
-            sshagent(['jenkins-ssh-key-id']) {
-                script {
-                    try {
-                        // SSH into the DigitalOcean droplet and execute deployment commands
-                        def sshCommand = '''
-                            ssh -v root@164.90.180.143 "\
-                            cd /buy-01 && \
-                            cd mr-jenk && \
-                            git pull origin main && \
-                            ./create.sh && \
-                            cd backend && \
-                            docker-compose up -d --build \
-                            "
-                        '''
-                        def sshOutput = sh(script: sshCommand, returnStatus: true)
-                        if (sshOutput != 0) {
-                            error "SSH command failed with exit code ${sshOutput}"
-                        }
-                    } catch (Exception e) {
-                        error "Error in SSH execution: ${e.message}"
-                    }
-                }
-            }
+        )
         }
         failure {
+            // Use the environment variables to set the subject and body dynamically
             emailext(
-            subject: 'Build failed',
-            body: 'Build failed by loser',
+            subject: "\$PROJECT_NAME - Build # \$BUILD_NUMBER - FAILURE",
+            body: "Check console output at \$BUILD_URL to view the results.",
             to: 'awiklund76@gmail.com'
         )
         }
