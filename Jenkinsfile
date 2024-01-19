@@ -14,16 +14,6 @@ pipeline {
                 sh './create.sh'
             }
         }
-        stage('Start Services') {
-            steps {
-                script {
-                    dir('backend') {
-                        //start user-ms
-                        sh 'docker-compose up -d --build'
-                    }
-                }
-            }
-        }
         stage('Frontend test') {
             environment {
                 PATH = "/root/.nvm/versions/node/v20.11.0/bin:$PATH"
@@ -34,6 +24,16 @@ pipeline {
                         sh 'npm install'
                         sh 'npm install -g @angular/cli@17'
                         sh 'ng test --browsers=ChromeHeadless --watch=false'
+                    }
+                }
+            }
+        }
+        stage('Start Services') {
+            steps {
+                script {
+                    dir('backend') {
+                        //start user-ms
+                        sh 'docker-compose up -d --build'
                     }
                 }
             }
