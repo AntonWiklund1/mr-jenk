@@ -85,7 +85,12 @@ pipeline {
             subject: "\$PROJECT_NAME - Build # \$BUILD_NUMBER - FAILURE",
             body: "Check console output at \$BUILD_URL to view the results.",
             to: 'awiklund76@gmail.com'
-        )
+            )
+        }
+        always {
+            // Delete the workspace after every build
+            cleanWs()
+            sh 'docker system prune -f'
         }
     }
 }
