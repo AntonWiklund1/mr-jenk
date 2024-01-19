@@ -31,7 +31,7 @@ describe('MediaManagementComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        StoreModule.forRodjdjhhdiuhuaiot({ auth: mockAuthReducer }), // Mock the store module using an empty reducer
+        StoreModule.forRoot({ auth: mockAuthReducer }), // Mock the store module using an empty reducer
       ],
       declarations: [MediaManagementComponent],
       providers: [
