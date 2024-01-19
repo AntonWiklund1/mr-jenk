@@ -1,35 +1,41 @@
+console.log("Karma configuration started");
 module.exports = function (config) {
   config.set({
-      basePath: '',
-      frameworks: ['jasmine', '@angular-devkit/build-angular'],
-      plugins: [
-          require('karma-jasmine'),
-          require('karma-chrome-launcher'),
-          require('karma-jasmine-html-reporter'),
-          require('karma-spec-reporter'),
-          require('@angular-devkit/build-angular/plugins/karma'),
-          require('karma-coverage-reporter'),
-          require('karma-junit-reporter') // Add this line
-
+    basePath: "",
+    frameworks: ["jasmine", "@angular-devkit/build-angular"],
+    plugins: [
+      require("karma-jasmine"),
+      require("karma-chrome-launcher"),
+      require("karma-jasmine-html-reporter"),
+      require("karma-coverage"),
+      require("karma-junit-reporter"), // Add this line
+      require("@angular-devkit/build-angular/plugins/karma"),
+    ],
+    client: {
+      clearContext: false, // leave Jasmine Spec Runner output visible in browser
+    },
+    jasmineHtmlReporter: {
+      suppressAll: true, // removes the duplicated traces
+    },
+    reporters: ["progress", "kjhtml", "coverage", "junit"], // Add 'junit' to the list of reporters
+    junitReporter: {
+      outputDir: "tests", // The directory where the output file will be saved
+      outputFile: "test-results.xml", // Name of the output file
+      useBrowserName: false, // Do not append browser name to the report
+    },
+    coverageReporter: {
+      dir: require("path").join(__dirname, "coverage"),
+      reporters: [
+        { type: "html" },
+        { type: "lcovonly", subdir: ".", file: "lcov.info" },
       ],
-      client: {
-          clearContext: false // leave Jasmine Spec Runner output visible in browser
-      },
-      jasmineHtmlReporter: {
-          suppressAll: true // removes the duplicated traces
-      },
-      junitReporter: {
-        outputDir: require('path').join(__dirname, './test-results'), // results will be saved as $outputDir/$browserName.xml
-        outputFile: 'test-results.xml', // if included, results will be saved as $outputDir/$browserName/$outputFile
-        useBrowserName: false // add browser name to report and classes names
-      },  
-      reporters: ['progress', 'kjhtml', 'spec', "junit"],
-      port: 9876,
-      colors: true,
-      logLevel: config.LOG_INFO,
-      autoWatch: true,
-      browsers: ['ChromeHeadless'],
-      singleRun: false,
-      restartOnFileChange: true
+    },
+    port: 9876,
+    colors: true,
+    logLevel: config.LOG_WARN,
+    autoWatch: true,
+    concurrency: 1,
+    browsers: ["ChromeHeadless"],
+    singleRun: false, // Set to true if you want Karma to exit after running the tests
   });
 };

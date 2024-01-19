@@ -14,21 +14,6 @@ pipeline {
                 sh './create.sh'
             }
         }
-        stage('Deploy to Production') {
-            steps {
-                script {
-                    ansiblePlaybook(
-                      colorized: true,
-                      credentialsId: 'deployssh',
-                      disableHostKeyChecking: true,
-                      installation: 'Ansible',
-                      inventory: '/etc/ansible',
-                      playbook: './playbook.yml',
-                      vaultTmpPath: ''
-                  )
-                }
-            }
-        }
         stage('Frontend test') {
             environment {
                 PATH = "/root/.nvm/versions/node/v20.11.0/bin:$PATH"
@@ -38,7 +23,7 @@ pipeline {
                     dir('frontend') {
                         sh 'npm install'
                         sh 'npm install -g @angular/cli@17'
-                        sh 'ng test --browsers=ChromeHeadless --watch=false --reporters=junit,progress'
+                        sh 'ng test --browsers=ChromeHeadless --watch=false'
                     }
                 }
             }
@@ -76,8 +61,22 @@ pipeline {
                 }
             }
         }
-        
 
+        stage('Deploy to Production') {
+            steps {
+                script {
+                    ansiblePlaybook(
+                      colorized: true,
+                      credentialsId: 'deployssh',
+                      disableHostKeyChecking: true,
+                      installation: 'Ansible',
+                      inventory: '/etc/ansible',
+                      playbook: './playbook.yml',
+                      vaultTmpPath: ''
+                  )
+                }
+            }
+        }
     }
     post {
         success {
