@@ -37,11 +37,6 @@ pipeline {
                     }
                 }
             }
-            post {
-                always {
-                    junit '**/frontend/test-results.xml'
-                }
-            }
         }
         stage('Unit Test') {
             steps {
@@ -66,12 +61,25 @@ pipeline {
                 }
             }
         }
-        
+        stage('Deploy to Production') {
+            steps {
+                script {
+                    ansiblePlaybook(
+                      colorized: true,
+                      credentialsId: 'deployssh',
+                      disableHostKeyChecking: true,
+                      installation: 'Ansible',
+                      inventory: '/etc/ansible',
+                      playbook: './playbook.yml',
+                      vaultTmpPath: ''
+                  )
+                }
+            }
+        }
+
     }
     post {
         success {
-        // ... other steps ...
-
             // Use the environment variables to set the subject and body dynamically
             emailext(
             subject: "\$PROJECT_NAME - Build # \$BUILD_NUMBER - SUCCESS",
