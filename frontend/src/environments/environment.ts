@@ -2,6 +2,6 @@
 export const environment = {
     production: false,
     // ... other environment specific settings
-    baseUrl: 'https://139.59.152.207:8443',
+    baseUrl: 'https://164.90.180.143:8443',
   };
   
