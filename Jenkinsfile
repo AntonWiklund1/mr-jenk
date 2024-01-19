@@ -54,11 +54,15 @@ pipeline {
             steps {
                 script {
                     dir('frontend') {
-                        sh 'pwd'
                         sh 'npm install'
                         sh 'npm install -g @angular/cli@17'
-                        sh 'ng test --browsers=ChromeHeadless --watch=false'
+                        sh 'ng test --browsers=ChromeHeadless --watch=false --code-coverage --reporters=junit'
                     }
+                }
+            }
+            post {
+                always {
+                    junit '**/frontend/test-results.xml'
                 }
             }
         }
