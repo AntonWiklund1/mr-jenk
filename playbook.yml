@@ -1,7 +1,7 @@
 ---
 - name: setup env variables
   shell: bash envset.sh
-  
+
 - name: Deploy to production
   gather_facts: false
   hosts: deployservers
@@ -26,4 +26,6 @@
       project_src: ../buy-01/mr-jenk/backend
       state: present # not particularly well understood right now
       env_file: secrets.yml
-      build: yes
+      build: true
+    environment:
+      ANSIBLE_VAULT_PASSWORD_FILE: ../etc/ansible/vault/ansible-vault.pass
