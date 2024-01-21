@@ -26,7 +26,7 @@ pipeline {
                           -Dsonar.token=sqp_940f70d246a1046e0d4b2bb15c16eebae98a3590
                         '''
                             timeout(time: 1, unit: 'HOURS') {
-                                QualityGateResult qg = waitForQualityGate()
+                                def qg = waitForQualityGate()
                                 if (qg.status != 'OK') {
                                     error "Pipeline aborted due to quality gate failure: ${qg.status}"
                                 }
