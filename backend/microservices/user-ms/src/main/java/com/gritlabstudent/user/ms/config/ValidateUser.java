@@ -48,17 +48,46 @@ public class ValidateUser {
 
     }
 
-    private static final String EMAIL_REGEX = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
-            + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+    // private static final String EMAIL_REGEX = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+    //         + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+
+    public static boolean isValidDomainPart(String domainPart) {
+        String[] parts = domainPart.split("\\.");
+        for (String part : parts) {
+            if (part.isEmpty()) {
+                return false;
+            }
+            for (char c : part.toCharArray()) {
+                if (!Character.isLetterOrDigit(c) && c != '-') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private static final String BASIC_EMAIL_REGEX = "^[\\w-\\.]+@";
+    private static final String TOP_LEVEL_DOMAIN_REGEX = "[\\w-]{2,4}$";
 
     public static boolean isValidEmail(String email) {
+
+        int atIndex = email.lastIndexOf('@');
+        if (atIndex == -1) {
+            return false;
+        }
         // Compile the regex pattern
-        Pattern pattern = Pattern.compile(EMAIL_REGEX);
+        // Pattern pattern = Pattern.compile(EMAIL_REGEX);
+        Pattern basicPattern = Pattern.compile(BASIC_EMAIL_REGEX);
+        Pattern topLevelDomainPattern = Pattern.compile(TOP_LEVEL_DOMAIN_REGEX);
 
         // Match the input email against the pattern
-        Matcher matcher = pattern.matcher(email);
+        // Matcher matcher = pattern.matcher(email);
+        Matcher basicMatcher = basicPattern.matcher(email);
+
+        Matcher topLevelDomainMatcher = topLevelDomainPattern.matcher(email);
 
         // Return true if it matches the pattern (valid format), false otherwise
-        return matcher.matches();
+        // return matcher.matches();
+        return basicMatcher.find() && topLevelDomainMatcher.find() &&isValidDomainPart(email.substring(atIndex + 1));
     }
 }
