@@ -105,7 +105,7 @@ pipeline {
         )
         }
         failure {
-            // Use the environment variables to set the subject and body dynamically
+
             emailext(
             subject: "\$PROJECT_NAME - Build # \$BUILD_NUMBER - FAILURE",
             body: "Check console output at \$BUILD_URL to view the results.",
