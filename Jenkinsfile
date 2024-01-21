@@ -114,7 +114,7 @@ pipeline {
         }
         always {
             // Delete the workspace after every build
-            cleanWs()
+            
             sh 'docker system prune -f'
         }
     }
