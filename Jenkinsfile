@@ -17,7 +17,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    withSonarQubeEnv('Your_SonarQube_Server_Name') {
+                    withSonarQubeEnv('safe-zone') {
                         dir('backend/microservices/user-ms/') {
                             // Run the SonarQube analysis
                             sh '''
