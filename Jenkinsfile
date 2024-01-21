@@ -105,7 +105,7 @@ pipeline {
         )
         }
         failure {
-            //etsting public
+
             emailext(
             subject: "\$PROJECT_NAME - Build # \$BUILD_NUMBER - FAILURE",
             body: "Check console output at \$BUILD_URL to view the results.",
