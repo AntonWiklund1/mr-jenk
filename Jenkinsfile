@@ -19,7 +19,6 @@ pipeline {
                 script {
                     withSonarQubeEnv('safe-zone') {
                         dir('backend/microservices/user-ms/') {
-                            // Run the SonarQube analysis
                             sh '''
                         mvn clean verify sonar:sonar \
                           -Dsonar.projectKey=safe-zone \
