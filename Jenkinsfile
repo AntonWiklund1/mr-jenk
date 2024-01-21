@@ -25,12 +25,12 @@ pipeline {
                           -Dsonar.host.url=http://207.154.208.44:9000 \
                           -Dsonar.token=sqp_940f70d246a1046e0d4b2bb15c16eebae98a3590
                         '''
-                            timeout(time: 1, unit: 'HOURS') {
-                                def qg = waitForQualityGate()
-                                if (qg.status != 'OK') {
-                                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                                }
-                            }
+                        }
+                    }
+                    timeout(time: 1, unit: 'HOURS') {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
                         }
                     }
                 }
