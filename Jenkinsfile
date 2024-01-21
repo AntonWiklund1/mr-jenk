@@ -17,19 +17,16 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    withSonarQubeEnv('SonarQube_Server_Config_Name') {
-                        // Binding Jenkins credential
-                        withCredentials([string(credentialsId: 'safe-zone', variable: 'SONAR_TOKEN')]) {
-                            dir('backend/microservices/user-ms/') {
-                                // Run the SonarQube analysis
-                                sh '''
-                            mvn clean verify sonar:sonar \
-                              -Dsonar.projectKey=safe-zone \
-                              -Dsonar.projectName='safe-zone' \
-                              -Dsonar.host.url=http://207.154.208.44:9000 \
-                              -Dsonar.login=$SONAR_TOKEN
-                            '''
-                            }
+                    withSonarQubeEnv('Your_SonarQube_Server_Name') {
+                        dir('backend/microservices/user-ms/') {
+                            // Run the SonarQube analysis
+                            sh '''
+                        mvn clean verify sonar:sonar \
+                          -Dsonar.projectKey=safe-zone \
+                          -Dsonar.projectName='safe-zone' \
+                          -Dsonar.host.url=http://207.154.208.44:9000 \
+                          -Dsonar.token=sqp_940f70d246a1046e0d4b2bb15c16eebae98a3590
+                        '''
                         }
                     }
                 }
