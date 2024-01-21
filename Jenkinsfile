@@ -14,6 +14,28 @@ pipeline {
                 sh './create.sh'
             }
         }
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    withSonarQubeEnv('SonarQube_Server_Config_Name') {
+                        // Binding Jenkins credential
+                        withCredentials([string(credentialsId: 'safe-zone', variable: 'SONAR_TOKEN')]) {
+                            dir('backend/microservices/user-ms/') {
+                                // Run the SonarQube analysis
+                                sh '''
+                            mvn clean verify sonar:sonar \
+                              -Dsonar.projectKey=safe-zone \
+                              -Dsonar.projectName='safe-zone' \
+                              -Dsonar.host.url=http://207.154.208.44:9000 \
+                              -Dsonar.login=$SONAR_TOKEN
+                            '''
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Frontend test') {
             environment {
                 PATH = "/root/.nvm/versions/node/v20.11.0/bin:$PATH"
