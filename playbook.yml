@@ -28,4 +28,6 @@
       env_file: secrets.yml
       build: true
     environment:
-      ANSIBLE_VAULT_PASSWORD_FILE: ../etc/ansible/vault/ansible-vault.pass
+      # ANSIBLE_VAULT_PASSWORD_FILE: ../etc/ansible/vault/ansible-vault.pass
+      mongousername: "Gritlab"
+      mongopass: "Gritlab"
