@@ -85,7 +85,7 @@ services:
       - mongo-data:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${mongousername}
-      MONGO_INITDB_ROOT_PASSWORD: ${mongopass}
+      MONGO_INITDB_ROOT_PASSWORD: ${mongodbpass}
 
   kafka:
     image: confluentinc/cp-kafka:latest
@@ -101,6 +101,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     depends_on:
       - zookeeper
+
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest

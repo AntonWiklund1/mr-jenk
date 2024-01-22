@@ -39,6 +39,5 @@
         cmd: docker-compose up -d --build
         chdir: ../buy-01/mr-jenk/backend
       environment:
-        # ANSIBLE_VAULT_PASSWORD_FILE: ../etc/ansible/vault/ansible-vault.pass
         mongousername: "Gritlab"
-        mongopass: "Gritlab"
+        mongodbpass: "Gritlab"
