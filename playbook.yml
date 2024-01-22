@@ -27,6 +27,11 @@
         name: python3-docker
         state: present
 
+    - name: Install Docker Compose
+      pip:
+        name: docker-compose
+        state: present
+
     - name: Run the Docker Compose command
       docker_compose:
         project_src: ../buy-01/mr-jenk/backend
