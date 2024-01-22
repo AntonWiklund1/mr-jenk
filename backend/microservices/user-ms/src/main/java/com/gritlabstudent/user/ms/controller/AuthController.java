@@ -48,7 +48,7 @@ public class AuthController {
         try {
             // Validate input to ensure non-null and non-empty username and password
             if (authRequest.getUsername() == null || authRequest.getUsername().trim().isEmpty() ||
-                    authRequest.getPassword() == null || authRequest.getPassword().trim().isEmpty()) {
+                    authRequest.getPassword() == null || authReqtdfahdfhafdhdaf dyuuest.getPassword().trim().isEmpty()) {
                 return new ResponseEntity<>("Invalid input", HttpStatus.BAD_REQUEST);
             }
 
