@@ -5,31 +5,30 @@
   become: true
   become_user: root
   tasks:
-  - name: Navigate to the repository directory and pull the latest changes
-    shell: |
-      cd ../buy-01/mr-jenk
-      git pull origin main
+    - name: Navigate to the repository directory and pull the latest changes
+      shell: |
+        cd ../buy-01/mr-jenk
+        git pull origin main
 
-  - name: Run create.sh
-    shell: ../buy-01/mr-jenk/create.sh
+    - name: Run create.sh
+      shell: ../buy-01/mr-jenk/create.sh
 
-  #- name: Navigate to Docker compose location
-  #  shell: |
-  # cd ../buy-01/mr-jenk/backend
-  # docker-compose up -d --build
+    #- name: Navigate to Docker compose location
+    #  shell: |
+    # cd ../buy-01/mr-jenk/backend
+    # docker-compose up -d --build
 
-  - name: Install Docker SDK for Python
-  pip:
-    name: docker
-    state: present
+    - name: Install Docker SDK for Python
+      pip:
+        name: docker
+        state: present
 
-  - name: Run the Docker Compose command
-    docker_compose:
-      project_src: ../buy-01/mr-jenk/backend
-      state: present # not particularly well understood right now
-      env_file: secrets.yml
-      build: true
-    environment:
-      # ANSIBLE_VAULT_PASSWORD_FILE: ../etc/ansible/vault/ansible-vault.pass
-      mongousername: "Gritlab"
-      mongopass: "Gritlab"
+    - name: Run the Docker Compose command
+      docker_compose:
+        project_src: ../buy-01/mr-jenk/backend
+        env_file: secrets.yml
+        build: true
+      environment:
+        # ANSIBLE_VAULT_PASSWORD_FILE: ../etc/ansible/vault/ansible-vault.pass
+        mongousername: "Gritlab"
+        mongopass: "Gritlab"
