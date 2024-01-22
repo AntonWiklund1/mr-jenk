@@ -83,9 +83,6 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${mongodbusername}
-      MONGO_INITDB_ROOT_PASSWORD: ${mongodbpass}
 
   kafka:
     image: confluentinc/cp-kafka:latest
