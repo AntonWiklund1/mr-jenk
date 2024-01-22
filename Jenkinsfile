@@ -65,16 +65,6 @@ pipeline {
                 }
             }
         }
-        stage('Start Services') {
-            steps {
-                script {
-                    dir('backend') {
-                        //start user-ms
-                        sh 'docker-compose up -d --build'
-                    }
-                }
-            }
-        }
         stage('Unit Test') {
             steps {
                 dir('backend/microservices/user-ms/') {
@@ -85,15 +75,6 @@ pipeline {
                 always {
                     dir('backend/microservices/user-ms/') {
                         junit 'target/surefire-reports/TEST-*.xml'
-                    }
-                }
-            }
-        }
-        stage('Stop services') {
-            steps {
-                script {
-                    dir('backend') {
-                        sh 'docker-compose down'
                     }
                 }
             }

@@ -36,8 +36,6 @@
 
     - name: Run the Docker Compose command
       command:
-        cmd: docker-compose up -d --build
+        cmd: docker-compose up -d --build -e mongodbusername=Gritlab -e mongodbpass=Gritlab
         chdir: ../buy-01/mr-jenk/backend
-      environment:
-        mongousername: "Gritlab"
-        mongodbpass: "Gritlab"
+      
